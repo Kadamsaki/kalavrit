@@ -1,0 +1,75 @@
+import { Link } from "wouter";
+import { motion } from "framer-motion";
+import { Badge } from "@/components/ui/badge";
+import type { Artwork } from "@/lib/data";
+
+function accentBg(accent: Artwork["accent"]) {
+  if (accent === "gold") return "from-[hsl(var(--accent)/0.22)] via-transparent to-transparent";
+  if (accent === "ink") return "from-[hsl(218_20%_12%/0.10)] via-transparent to-transparent";
+  return "from-[hsl(var(--primary)/0.22)] via-transparent to-transparent";
+}
+
+export function ArtworkCard({ art }: { art: Artwork }) {
+  return (
+    <Link href={`/artwork/${art.id}`}>
+      <a className="block" data-testid={`link-artwork-${art.id}`}>
+        <motion.div
+          whileHover={{ y: -3 }}
+          transition={{ duration: 0.25, ease: "easeOut" }}
+          className="glass-card hover-lift group ring-soft overflow-hidden rounded-3xl"
+          data-testid={`card-artwork-${art.id}`}
+        >
+          <div className="relative aspect-[4/3] overflow-hidden">
+            <img
+              src={art.image}
+              alt={art.title}
+              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              data-testid={`img-artwork-${art.id}`}
+            />
+            <div className={`pointer-events-none absolute inset-0 bg-gradient-to-t ${accentBg(art.accent)}`} />
+            <div className="absolute left-4 top-4 flex items-center gap-2">
+              <Badge
+                variant="secondary"
+                className="border-card-border bg-white/50"
+                data-testid={`badge-artwork-size-${art.id}`}
+              >
+                {art.size}
+              </Badge>
+              <Badge
+                variant="secondary"
+                className={
+                  "border " +
+                  (art.availability === "Available"
+                    ? "border-[hsl(158_38%_34%/0.22)] bg-[hsl(158_38%_34%/0.10)] text-[hsl(158_38%_28%)]"
+                    : "border-[hsl(218_10%_42%/0.22)] bg-[hsl(218_10%_42%/0.08)] text-muted-foreground")
+                }
+                data-testid={`badge-artwork-availability-${art.id}`}
+              >
+                {art.availability}
+              </Badge>
+            </div>
+          </div>
+
+          <div className="p-5">
+            <div className="font-serif text-lg tracking-[-0.02em]" data-testid={`text-artwork-title-${art.id}`}>
+              {art.title}
+            </div>
+            <div className="mt-1 text-sm text-muted-foreground" data-testid={`text-artwork-subtitle-${art.id}`}>
+              {art.subtitle}
+            </div>
+
+            <div className="mt-4 flex items-center justify-between">
+              <div className="text-sm" data-testid={`text-artwork-price-${art.id}`}>
+                <span className="font-semibold">₹{art.price.toLocaleString("en-IN")}</span>
+                <span className="text-muted-foreground"> • {art.medium}</span>
+              </div>
+              <span className="text-sm text-muted-foreground" data-testid={`text-artwork-year-${art.id}`}>
+                {art.year}
+              </span>
+            </div>
+          </div>
+        </motion.div>
+      </a>
+    </Link>
+  );
+}

@@ -6,8 +6,8 @@ import { Card } from "@/components/ui/card";
 
 export default function NotFound() {
   return (
-    <div className="min-h-screen bg-sheen">
-      <div className="grain">
+    <div className="min-h-screen">
+      <div className="studio-noise">
         <div className="mx-auto flex min-h-screen max-w-3xl items-center justify-center px-6 py-12">
           <motion.div
             initial={{ opacity: 0, y: 10, filter: "blur(8px)" }}
@@ -15,7 +15,7 @@ export default function NotFound() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="w-full"
           >
-            <Card className="glass rounded-3xl p-7" data-testid="card-not-found">
+            <Card className="glass-card ring-soft rounded-3xl p-7" data-testid="card-not-found">
               <div className="flex items-start justify-between gap-4">
                 <div>
                   <div
@@ -30,10 +30,7 @@ export default function NotFound() {
                   >
                     Page not found
                   </h1>
-                  <p
-                    className="mt-2 text-sm text-muted-foreground"
-                    data-testid="text-not-found-subtitle"
-                  >
+                  <p className="mt-2 text-sm text-muted-foreground" data-testid="text-not-found-subtitle">
                     The link you followed doesn’t exist in this prototype.
                   </p>
                 </div>
@@ -43,11 +40,11 @@ export default function NotFound() {
                 <Link href="/">
                   <Button className="h-10" data-testid="link-back-home">
                     <ArrowLeft className="mr-2 h-4 w-4" />
-                    Back to dashboard
+                    Back to home
                   </Button>
                 </Link>
                 <Button variant="secondary" className="h-10" data-testid="button-not-found-support">
-                  Contact support
+                  Contact
                 </Button>
               </div>
             </Card>

@@ -1,0 +1,90 @@
+You are a senior full-stack web developer and UI/UX designer.
+
+I want you to design and develop a premium, emotionally driven art website for a single independent artist (this is NOT a multi-artist marketplace).
+
+Startup idea context:
+This website is for an artist who creates handmade paintings and already has real customer reactions where people feel happy and emotionally connected after seeing the artwork.
+Customers should be able to buy ready-made paintings as well as place fully customized painting orders such as family portraits, couple paintings, friends, pets, and memory-based art.
+The website should sell emotions and memories, not mass products.
+
+Website type:
+Single Artist Personal Art Brand Website
+It should feel like a modern art studio and premium gallery, not an Amazon-style marketplace.
+
+Required modules to be properly designed and developed:
+
+Home Page
+The home page should have an emotional hero section with a powerful headline and subtext.
+There should be a clear call-to-action button like “Get Your Custom Painting”.
+Include featured artworks, customer reactions/testimonials, and smooth scrolling sections.
+Use subtle animations to make the page feel alive and premium.
+
+Artwork Gallery / Shop
+Display high-quality images of ready-made paintings in a clean grid layout.
+Each artwork should open into a detailed page showing the painting story, size, medium, price, and a buy now option.
+Include filters such as painting type and price range.
+Add elegant hover effects and transitions on artwork cards.
+
+Custom Order Module (core feature)
+Create a detailed and clean custom painting order experience.
+The form should allow customers to select the painting type, upload reference images, write an emotional description or story, choose size, budget range, and expected delivery timeline.
+A multi-step form experience is preferred for better UX.
+After submission, show a confirmation screen that builds trust.
+
+Payment Integration
+Integrate payment options like UPI and cards (Razorpay ready).
+Allow full payment or advance payment.
+Show a clean order confirmation and success screen.
+
+Reviews and Reactions Section
+Include star ratings, written customer reviews, and before-after reaction images or videos.
+This section should highlight emotions and happiness, not just ratings.
+
+About the Artist Page
+Tell the artist’s personal story, journey, and philosophy behind the art.
+Use real photos, process shots, and storytelling-based content.
+
+Contact and Trust Section
+Include a contact form, WhatsApp integration, and an FAQ section covering delivery time, revisions, and refund policy.
+
+Admin Panel
+A simple admin panel is required to add and edit artworks, manage custom orders, update order status, and feature selected artworks on the homepage.
+
+UI and UX requirements (very important):
+The overall look should be premium, artistic, emotional, and clean.
+Avoid loud colors and cluttered layouts.
+Use smooth micro-interactions, scroll-based animations, and modern transitions.
+The website should be fully responsive and mobile-first.
+
+Color theme:
+Use a warm off-white or ivory background.
+Primary accent color should be terracotta or soft brown.
+Secondary accent should be muted gold.
+Text color should be deep charcoal black.
+CTA buttons should stand out while still looking elegant.
+
+Typography:
+Use Playfair Display or Cinzel for headings.
+Use Poppins or Lato for body text.
+Maintain proper spacing, readability, and hierarchy.
+
+Tech stack preference:
+Frontend using React or Next.js
+Styling with Tailwind CSS
+Animations using Framer Motion
+Backend with Node.js and Express
+Database using MongoDB
+Image storage via Cloudinary
+Payments via Razorpay
+
+Animation guidelines:
+Hero section text reveal animations
+Hover effects on artwork cards
+Smooth page transitions
+Subtle button hover micro-animations
+Avoid over-animation; keep everything classy and smooth.
+
+Final expectation:
+The final website should be production-ready, visually stunning, and emotionally engaging.
+It should make visitors feel connected to the art and confident about ordering customized paintings.
+Think of it as a blend of a premium art gallery and a modern creative startup website.
