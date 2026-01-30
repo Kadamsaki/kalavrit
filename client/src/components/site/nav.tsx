@@ -45,10 +45,10 @@ export function SiteNav() {
                 </span>
                 <div className="leading-tight">
                   <div className="font-serif text-base tracking-[-0.02em]" data-testid="text-brand">
-                    Ivory & Terracotta
+                    KalaVrit
                   </div>
                   <div className="text-xs text-muted-foreground" data-testid="text-brand-sub">
-                    Single-artist studio
+                    Turning emotions into art
                   </div>
                 </div>
               </a>

@@ -9,10 +9,10 @@ export function SiteFooter() {
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="glass-card ring-soft rounded-3xl p-6">
               <div className="font-serif text-xl" data-testid="text-footer-brand">
-                Ivory & Terracotta
+                KalaVrit
               </div>
               <p className="mt-2 text-sm text-muted-foreground" data-testid="text-footer-tagline">
-                Handmade paintings that sell emotions, not products.
+                Turning emotions into art
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-2 rounded-full border border-card-border bg-white/40 px-3 py-2">
@@ -73,7 +73,7 @@ export function SiteFooter() {
             className="mt-8 flex flex-col gap-2 rounded-2xl border border-card-border bg-white/35 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
             data-testid="footer-bottom"
           >
-            <span data-testid="text-footer-copyright">© {new Date().getFullYear()} Ivory & Terracotta Studio</span>
+            <span data-testid="text-footer-copyright">© {new Date().getFullYear()} KalaVrit</span>
             <span data-testid="text-footer-note">Prototype • No payments processed</span>
           </div>
         </div>

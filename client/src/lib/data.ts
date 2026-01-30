@@ -25,10 +25,10 @@ export type Review = {
 };
 
 export type CustomOrderDraft = {
-  type: "Family" | "Couple" | "Pet" | "Friends" | "Memory";
+  paintingType: "Ghibli" | "Vector Art" | "Sketch" | "Charcoal" | "Realistic";
+  person: "Couple" | "Solo";
   size: "A4" | "A3" | "12x16" | "16x20";
-  budget: "₹3k–₹6k" | "₹6k–₹12k" | "₹12k–₹25k" | "₹25k+";
-  timeline: "7–10 days" | "10–14 days" | "2–3 weeks" | "1 month";
+  frame: "With Frame" | "Without Frame";
   story: string;
   references: File[];
 };
@@ -38,17 +38,17 @@ export type OrderStatus = "New" | "In review" | "Sketch approved" | "Painting" |
 export type AdminOrder = {
   id: string;
   customer: string;
-  type: CustomOrderDraft["type"];
-  budget: CustomOrderDraft["budget"];
+  type: CustomOrderDraft["person"];
+  budget: string;
   status: OrderStatus;
   createdAt: string;
 };
 
 export const artist = {
-  name: "Aarohi Mehta",
-  studio: "Ivory & Terracotta Studio",
-  city: "Jaipur",
-  tagline: "Handmade portraits that keep memories warm.",
+  name: "KalaVrit",
+  studio: "KalaVrit",
+  city: "",
+  tagline: "Turning emotions into art",
 };
 
 export const artworks: Artwork[] = [
@@ -157,6 +157,6 @@ export const reviews: Review[] = [
 
 export const adminSeedOrders: AdminOrder[] = [
   { id: "o-1042", customer: "Neha R.", type: "Couple", budget: "₹12k–₹25k", status: "Delivered", createdAt: "2025-11-02" },
-  { id: "o-1051", customer: "Imran S.", type: "Family", budget: "₹6k–₹12k", status: "Painting", createdAt: "2025-12-06" },
-  { id: "o-1058", customer: "Asha P.", type: "Pet", budget: "₹3k–₹6k", status: "In review", createdAt: "2025-12-18" },
+  { id: "o-1051", customer: "Imran S.", type: "Solo", budget: "₹6k–₹12k", status: "Painting", createdAt: "2025-12-06" },
+  { id: "o-1058", customer: "Asha P.", type: "Solo", budget: "₹3k–₹6k", status: "In review", createdAt: "2025-12-18" },
 ];

@@ -18,10 +18,10 @@ export default function AboutPage() {
           <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="font-serif text-3xl tracking-[-0.02em]" data-testid="text-about-title">
-                About the artist
+About KalaVrit
               </h1>
               <p className="mt-2 text-sm text-muted-foreground" data-testid="text-about-subtitle">
-                A story-led studio—built around warmth, detail, and patience.
+A modern digital art studio—built around memories, meaning, and craft.
               </p>
             </div>
             <Badge variant="secondary" className="border-card-border bg-white/45" data-testid="badge-about">
@@ -39,19 +39,19 @@ export default function AboutPage() {
               <div className="flex items-center gap-2">
                 <Brush className="h-4 w-4 text-primary" />
                 <div className="text-sm font-semibold" data-testid="text-about-story-title">
-                  {artist.name}
+                  KalaVrit
                 </div>
               </div>
               <h2 className="mt-4 font-serif text-2xl tracking-[-0.02em]" data-testid="text-about-headline">
-                I paint people the way they feel to you.
+We turn emotions and memories into meaningful art.
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-muted-foreground" data-testid="text-about-body">
-                Some portraits are about accuracy. Mine are about belonging. I work slowly, layering warm neutrals and
-                soft edges, so the final piece feels like a memory you can hold.
+                KalaVrit exists for the moments you don’t want to lose—people, places, pets, and feelings that deserve a
+                form you can keep.
                 <br />
                 <br />
-                The process is simple: you share references + story → I send a sketch preview → you approve → I paint.
-                I’m drawn to the small details that matter: a laugh line, a posture, a familiar light.
+                Choose an art style that matches your vibe (Ghibli, vector, sketch, charcoal, realistic), share your
+                references and your emotion, and we’ll guide you through the next steps with a calm, clear process.
               </p>
 
               <div className="mt-6 grid gap-3 sm:grid-cols-3">

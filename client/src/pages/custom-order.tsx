@@ -34,10 +34,10 @@ export default function CustomOrderPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [draft, setDraft] = useState<CustomOrderDraft>({
-    type: "Couple",
+    paintingType: "Ghibli",
+    person: "Couple",
     size: "12x16",
-    budget: "₹6k–₹12k",
-    timeline: "10–14 days",
+    frame: "Without Frame",
     story: "",
     references: [],
   });
@@ -53,7 +53,34 @@ export default function CustomOrderPage() {
   }
 
   function submit() {
-    setSubmitted(true);
+    const phone = "919766425515";
+
+    const hasFiles = draft.references.length > 0;
+    const fileIndicator = hasFiles
+      ? `${draft.references.length} file(s) selected (will be attached manually)`
+      : "No files selected";
+
+    const message = [
+      "Hello KalaVrit 👋",
+      "I would like to place a custom art request.",
+      "",
+      `🎨 Art Style: ${draft.paintingType}`,
+      `👤 Person: ${draft.person}`,
+      `📏 Size: ${draft.size}`,
+      `🖼️ Frame: ${draft.frame}`,
+      "",
+      "📝 Description / Emotion:",
+      draft.story ? draft.story : "(No description provided)",
+      "",
+      "📎 Reference Images:",
+      fileIndicator,
+      "",
+      "Please let me know the next steps.",
+      "Thank you!",
+    ].join("\n");
+
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+    window.location.href = url;
   }
 
   return (
@@ -107,42 +134,66 @@ export default function CustomOrderPage() {
                   >
                     <div className="rounded-3xl border border-card-border bg-white/45 p-5">
                       <div className="text-sm font-semibold" data-testid="text-custom-type-title">
-                        Choose painting type
+                        Painting type
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground" data-testid="text-custom-type-help">
-                        This helps the artist plan composition and mood.
+                        Pick a style—we’ll match the mood and details to your references.
                       </p>
                       <div className="mt-4">
                         <Select
-                          value={draft.type}
-                          onValueChange={(v) => setDraft((d) => ({ ...d, type: v as any }))}
+                          value={draft.paintingType}
+                          onValueChange={(v) => setDraft((d) => ({ ...d, paintingType: v as any }))}
                         >
-                          <SelectTrigger className="h-11" data-testid="select-custom-type">
-                            <SelectValue placeholder="Select type" />
+                          <SelectTrigger className="h-11" data-testid="select-custom-painting-type">
+                            <SelectValue placeholder="Select style" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["Family", "Couple", "Friends", "Pet", "Memory"].map((t) => (
-                              <SelectItem key={t} value={t} data-testid={`option-type-${t.toLowerCase()}`}>
+                            {["Ghibli", "Vector Art", "Sketch", "Charcoal", "Realistic"].map((t) => (
+                              <SelectItem
+                                key={t}
+                                value={t}
+                                data-testid={`option-painting-type-${t.replace(/\s+/g, "-").toLowerCase()}`}
+                              >
                                 {t}
                               </SelectItem>
                             ))}
                           </SelectContent>
                         </Select>
                       </div>
+
+                      <div className="mt-4">
+                        <div className="text-sm font-semibold" data-testid="text-custom-person-title">
+                          Person
+                        </div>
+                        <div className="mt-2">
+                          <Select
+                            value={draft.person}
+                            onValueChange={(v) => setDraft((d) => ({ ...d, person: v as any }))}
+                          >
+                            <SelectTrigger className="h-11" data-testid="select-custom-person">
+                              <SelectValue placeholder="Select" />
+                            </SelectTrigger>
+                            <SelectContent>
+                              {["Couple", "Solo"].map((t) => (
+                                <SelectItem key={t} value={t} data-testid={`option-person-${t.toLowerCase()}`}>
+                                  {t}
+                                </SelectItem>
+                              ))}
+                            </SelectContent>
+                          </Select>
+                        </div>
+                      </div>
                     </div>
 
                     <div className="rounded-3xl border border-card-border bg-white/45 p-5">
                       <div className="text-sm font-semibold" data-testid="text-custom-size-title">
-                        Size & budget
+                        Size & frame
                       </div>
                       <p className="mt-1 text-sm text-muted-foreground" data-testid="text-custom-size-help">
-                        Choose a range—final quote is confirmed after review.
+                        Choose size, then whether you want a framed delivery.
                       </p>
                       <div className="mt-4 grid gap-3">
-                        <Select
-                          value={draft.size}
-                          onValueChange={(v) => setDraft((d) => ({ ...d, size: v as any }))}
-                        >
+                        <Select value={draft.size} onValueChange={(v) => setDraft((d) => ({ ...d, size: v as any }))}>
                           <SelectTrigger className="h-11" data-testid="select-custom-size">
                             <SelectValue placeholder="Select size" />
                           </SelectTrigger>
@@ -155,39 +206,16 @@ export default function CustomOrderPage() {
                           </SelectContent>
                         </Select>
 
-                        <Select
-                          value={draft.budget}
-                          onValueChange={(v) => setDraft((d) => ({ ...d, budget: v as any }))}
-                        >
-                          <SelectTrigger className="h-11" data-testid="select-custom-budget">
-                            <SelectValue placeholder="Select budget" />
+                        <Select value={draft.frame} onValueChange={(v) => setDraft((d) => ({ ...d, frame: v as any }))}>
+                          <SelectTrigger className="h-11" data-testid="select-custom-frame">
+                            <SelectValue placeholder="Frame" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["₹3k–₹6k", "₹6k–₹12k", "₹12k–₹25k", "₹25k+"].map((t) => (
+                            {["With Frame", "Without Frame"].map((t) => (
                               <SelectItem
                                 key={t}
                                 value={t}
-                                data-testid={`option-budget-${t.replace(/[^0-9a-z]+/gi, "-").toLowerCase()}`}
-                              >
-                                {t}
-                              </SelectItem>
-                            ))}
-                          </SelectContent>
-                        </Select>
-
-                        <Select
-                          value={draft.timeline}
-                          onValueChange={(v) => setDraft((d) => ({ ...d, timeline: v as any }))}
-                        >
-                          <SelectTrigger className="h-11" data-testid="select-custom-timeline">
-                            <SelectValue placeholder="Select timeline" />
-                          </SelectTrigger>
-                          <SelectContent>
-                            {["7–10 days", "10–14 days", "2–3 weeks", "1 month"].map((t) => (
-                              <SelectItem
-                                key={t}
-                                value={t}
-                                data-testid={`option-timeline-${t.replace(/[^0-9a-z]+/gi, "-").toLowerCase()}`}
+                                data-testid={`option-frame-${t.replace(/\s+/g, "-").toLowerCase()}`}
                               >
                                 {t}
                               </SelectItem>
@@ -291,9 +319,15 @@ export default function CustomOrderPage() {
                       </div>
                       <div className="mt-4 grid gap-3 md:grid-cols-2">
                         <div className="rounded-2xl border border-card-border bg-white/40 p-4">
-                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Type</div>
-                          <div className="mt-1 font-medium" data-testid="text-review-type">
-                            {draft.type}
+                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Art style</div>
+                          <div className="mt-1 font-medium" data-testid="text-review-painting-type">
+                            {draft.paintingType}
+                          </div>
+                        </div>
+                        <div className="rounded-2xl border border-card-border bg-white/40 p-4">
+                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Person</div>
+                          <div className="mt-1 font-medium" data-testid="text-review-person">
+                            {draft.person}
                           </div>
                         </div>
                         <div className="rounded-2xl border border-card-border bg-white/40 p-4">
@@ -303,15 +337,9 @@ export default function CustomOrderPage() {
                           </div>
                         </div>
                         <div className="rounded-2xl border border-card-border bg-white/40 p-4">
-                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Budget</div>
-                          <div className="mt-1 font-medium" data-testid="text-review-budget">
-                            {draft.budget}
-                          </div>
-                        </div>
-                        <div className="rounded-2xl border border-card-border bg-white/40 p-4">
-                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Timeline</div>
-                          <div className="mt-1 font-medium" data-testid="text-review-timeline">
-                            {draft.timeline}
+                          <div className="text-xs uppercase tracking-wider text-muted-foreground">Frame</div>
+                          <div className="mt-1 font-medium" data-testid="text-review-frame">
+                            {draft.frame}
                           </div>
                         </div>
                       </div>
@@ -334,18 +362,19 @@ export default function CustomOrderPage() {
                         What happens next
                       </div>
                       <div className="mt-4 space-y-2 text-sm text-muted-foreground">
-                        <div>1) Artist reviews your references + story</div>
-                        <div>2) You receive a sketch preview to approve</div>
-                        <div>3) Painting begins after confirmation</div>
+                        <div>1) We review your references + emotion</div>
+                        <div>2) We confirm next steps on WhatsApp</div>
+                        <div>3) You’ll receive guidance for approvals</div>
                       </div>
-                      <Link href="/payment">
-                        <Button asChild variant="secondary" className="mt-5 h-11 w-full" data-testid="button-custom-go-payment">
-                          <a data-testid="link-custom-go-payment">
-                            Choose payment option (mock)
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                          </a>
-                        </Button>
-                      </Link>
+                      <Button
+                        variant="secondary"
+                        className="mt-5 h-11 w-full"
+                        onClick={submit}
+                        data-testid="button-custom-submit-review"
+                      >
+                        Submit request on WhatsApp
+                        <ArrowRight className="ml-2 h-4 w-4" />
+                      </Button>
                     </div>
                   </motion.div>
                 )}

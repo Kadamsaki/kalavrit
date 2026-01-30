@@ -29,17 +29,17 @@ function Hero() {
               className="border-card-border bg-white/45"
               data-testid="badge-hero"
             >
-              Single artist • Handmade originals • Custom portraits
+Multiple styles • Personalized artworks • Custom portraits
             </Badge>
 
             <h1
               className="mt-5 font-serif text-4xl tracking-[-0.03em] sm:text-5xl"
               data-testid="text-hero-title"
             >
-              Paintings that feel like home.
+Turning emotions into art.
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground" data-testid="text-hero-subtitle">
-              Order a premium custom portrait—family, couple, pets, friends, or memory-based art.
+              Commission personalized art in multiple styles—Ghibli, vector art, sketches, charcoal, and realistic.
               Every piece begins with your story and ends as something you can keep.
             </p>
 
@@ -117,10 +117,10 @@ function Hero() {
               <div className="flex items-center justify-between">
                 <div>
                   <div className="text-sm text-muted-foreground" data-testid="text-hero-artist-label">
-                    Artist
+Studio
                   </div>
                   <div className="font-serif text-lg" data-testid="text-hero-artist">
-                    {artist.name}
+                    KalaVrit
                   </div>
                 </div>
                 <div className="text-right">
@@ -128,7 +128,7 @@ function Hero() {
                     Studio
                   </div>
                   <div className="font-medium" data-testid="text-hero-city">
-                    {artist.city}
+                    KalaVrit
                   </div>
                 </div>
               </div>
