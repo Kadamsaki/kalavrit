@@ -14,8 +14,8 @@ export function ArtworkCard({ art }: { art: Artwork }) {
     <Link href={`/artwork/${art.id}`}>
       <a className="block" data-testid={`link-artwork-${art.id}`}>
         <motion.div
-          whileHover={{ y: -3 }}
-          transition={{ duration: 0.25, ease: "easeOut" }}
+          whileHover={{ scale: 1.012 }}
+          transition={{ duration: 0.55, ease: [0.22, 1, 0.36, 1] }}
           className="glass-card hover-lift group ring-soft overflow-hidden rounded-3xl"
           data-testid={`card-artwork-${art.id}`}
         >
