@@ -1,0 +1,151 @@
+Please update and finalize the existing website design and development using the following detailed instructions.
+Do NOT change the previously defined color theme, typography, UI style, animations, or overall visual language.
+
+Brand Identity
+
+Brand Name: KalaVrit
+
+Brand Tagline: Turning emotions into art
+
+Replace all artist-name references with KalaVrit.
+
+Ensure logo text, header, footer, and metadata consistently use KalaVrit.
+
+1. Home Page Content Update
+
+Update the homepage headline and content to reflect multiple art styles instead of a single artist.
+
+Messaging should clearly communicate that KalaVrit offers multiple art forms such as Ghibli, vector art, sketches, charcoal, and realistic art.
+
+Maintain an emotional tone focused on memories, feelings, and personalization.
+
+The tagline “Turning emotions into art” should be visible on the hero section.
+
+Keep smooth animations and premium layout exactly as previously defined.
+
+2. Artwork Gallery / Custom Order Page Updates
+Painting Type Dropdown
+
+Replace the existing painting type section with a dropdown menu.
+
+Dropdown options must be exactly:
+
+Ghibli
+
+Vector Art
+
+Sketch
+
+Charcoal
+
+Realistic
+
+Person Selection Dropdown
+
+Add a second dropdown directly below painting type.
+
+Label it “Person”.
+
+Options:
+
+Couple
+
+Solo
+
+Size & Frame Options
+
+Keep the size selection dropdown.
+
+Remove the budget dropdown completely.
+
+Add a new dropdown or toggle for:
+
+With Frame
+
+Without Frame
+
+3. Submit Request → WhatsApp Auto-Message Integration
+
+Remove the payment module entirely.
+
+On clicking “Submit Request”, automatically redirect the user to WhatsApp with a pre-filled message.
+
+Use WhatsApp API / wa.me integration.
+
+WhatsApp Auto-Message Format
+
+The message should be auto-generated using the form data in this exact structured format:
+
+Hello KalaVrit 👋
+I would like to place a custom art request.
+
+🎨 Art Style: {Selected Painting Type}
+👤 Person: {Couple / Solo}
+📏 Size: {Selected Size}
+🖼️ Frame: {With Frame / Without Frame}
+
+📝 Description / Emotion:
+{Customer’s written description}
+
+📎 Reference Images:
+{Image upload indicator or attachment}
+
+Please let me know the next steps.
+Thank you!
+
+Ensure all selected fields auto-fill correctly and the WhatsApp chat opens smoothly without extra user effort.
+
+4. Reactions Page – Customer Submission Feature
+
+Keep the existing reaction display layout.
+
+Add a “Share Your Reaction” section for customers.
+
+Create a submission form with the following fields:
+
+Customer name
+
+Star rating
+
+Short reaction / feedback text
+
+Upload option for photo or video
+
+Submitted reactions should go for admin approval before appearing publicly.
+
+Maintain emotional and clean UI styling consistent with the website.
+
+5. About Page Update
+
+Change the page title from “About the Artist” to About KalaVrit.
+
+Rewrite content to explain:
+
+What KalaVrit stands for
+
+Its vision
+
+The idea of turning emotions and memories into meaningful art
+
+Avoid focusing on an individual artist story.
+
+6. Design & Style Constraints (Important)
+
+Do NOT modify:
+
+Color palette
+
+Fonts
+
+Spacing system
+
+Animations
+
+UI layout philosophy
+
+All newly added sections must visually blend with the existing premium, artistic, and emotional design.
+
+Final Goal
+
+Deliver a refined, emotionally engaging, and highly interactive art website for KalaVrit that reflects multiple art styles, personalized experiences, and seamless WhatsApp-based communication.
+The website should feel like a modern digital art studio where emotions are transformed into art.
