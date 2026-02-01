@@ -20,11 +20,11 @@ export function ArtworkCard({ art }: { art: Artwork }) {
           className="glass-card hover-lift group ring-soft overflow-hidden rounded-3xl"
           data-testid={`card-artwork-${art.id}`}
         >
-          <div className="relative aspect-[4/3] overflow-hidden">
+          <div className={`relative aspect-[4/3] overflow-hidden ${art.objectFit === 'contain' ? 'bg-[hsl(var(--card))]' : ''}`}>
             <img
               src={art.image}
               alt={art.title}
-              className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              className={`h-full w-full transition-transform duration-500 group-hover:scale-[1.03] ${art.objectFit === 'contain' ? 'object-contain' : 'object-cover'}`}
               style={art.objectPosition ? { objectPosition: art.objectPosition } : undefined}
               data-testid={`img-artwork-${art.id}`}
             />

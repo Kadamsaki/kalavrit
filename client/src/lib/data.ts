@@ -12,7 +12,8 @@ export type Artwork = {
   story: string;
   image: string;
   accent: "terracotta" | "gold" | "ink";
-  objectPosition?: string; // Optional: custom positioning for image cropping (e.g., "top", "center top")
+  objectPosition?: string; // Optional: custom positioning for image cropping
+  objectFit?: "cover" | "contain"; // Optional: custom fit style (default: cover)
 };
 
 export type Review = {
@@ -101,7 +102,7 @@ export const artworks: Artwork[] = [
     story: "Capturing the playful yet profound essence of creation through the whimsical lens of Ghibli-inspired art.",
     image: "/featured_2.jpg",
     accent: "gold",
-    objectPosition: "top", // Ensures face is fully visible
+    objectFit: "contain", // Shows full artwork without cropping
   },
   {
     id: "iv-003",
