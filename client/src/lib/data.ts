@@ -103,6 +103,7 @@ export const artworks: Artwork[] = [
     story: "Capturing the playful yet profound essence of creation through the whimsical lens of Ghibli-inspired art.",
     image: "/featured_2.jpg",
     accent: "gold",
+    objectPosition: "top",
   },
   {
     id: "iv-003",
