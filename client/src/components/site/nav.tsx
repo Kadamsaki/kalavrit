@@ -51,8 +51,8 @@ export function SiteNav() {
     <div className="sticky top-0 z-50">
       <div
         className={`transition-all duration-500 ease-out ${isScrolled
-            ? "bg-[hsl(var(--background)/0.95)] backdrop-blur-xl shadow-sm"
-            : "bg-transparent backdrop-blur-sm"
+          ? "bg-[hsl(var(--background)/0.95)] backdrop-blur-xl shadow-sm"
+          : "bg-transparent backdrop-blur-sm"
           }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
@@ -62,7 +62,7 @@ export function SiteNav() {
                 <img
                   src="/logo.png"
                   alt="KalaVrit"
-                  className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                   data-testid="text-brand"
                 />
               </a>
