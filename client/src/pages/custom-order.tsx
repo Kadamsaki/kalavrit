@@ -65,7 +65,7 @@ export default function CustomOrderPage() {
     const hasFiles = draft.references.length > 0;
     const fileNames = hasFiles
       ? draft.references.map((f) => f.name).join(", ")
-      : "No files selected";
+      : "";
 
     const messageText = [
       "Hello KalaVrit! 🎨",
@@ -79,22 +79,12 @@ export default function CustomOrderPage() {
       "💌 My Story / The Emotion I want to capture:",
       draft.story ? draft.story : "(No description provided)",
       "",
-      "📸 Reference Images:",
       hasFiles
-        ? `I have ${draft.references.length} reference image(s) ready: ${fileNames}`
-        : "I will share my reference images shortly.",
-      "",
-      "⚠️ IMPORTANT: I am attaching my reference images right after sending this message.",
+        ? `📸 Reference Images: I have ${draft.references.length} image(s) ready to share.`
+        : "📸 I will share my reference images shortly.",
       "",
       "I'm looking forward to your creative touch. Please let me know the next steps! Thank you!",
     ].join("\n");
-
-    // Alert user to attach images after sending the message
-    if (hasFiles) {
-      alert(
-        `📸 Reminder: After WhatsApp opens, please:\n\n1. Send this message first\n2. Then tap the attachment icon (📎)\n3. Select and send your ${draft.references.length} reference image(s)\n\nYour selected files:\n${fileNames}`
-      );
-    }
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageText)}`;
     window.open(url, "_blank");
