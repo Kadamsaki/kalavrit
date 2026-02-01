@@ -8,7 +8,7 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 lg:px-10">
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="glass-card ring-soft rounded-3xl p-6">
-              <div className="h-20 overflow-hidden" data-testid="text-footer-brand">
+              <div className="h-24 overflow-hidden" data-testid="text-footer-brand">
                 <img src="/logo.png" alt="KalaVrit" className="h-full object-contain" />
               </div>
               <p className="mt-2 text-sm text-muted-foreground font-medium italic" data-testid="text-footer-tagline">

@@ -34,7 +34,7 @@ function Hero() {
             </Badge>
 
             <div className="flex items-center" data-testid="text-hero-brand-logo">
-              <h2 className="font-serif text-3xl font-bold tracking-[-0.03em] text-[hsl(var(--primary))]">KalaVrit</h2>
+              <img src="/logo.png" alt="KalaVrit" className="h-14 w-auto object-contain" />
             </div>
             <h1
               className="mt-2 font-serif text-4xl tracking-[-0.03em] sm:text-5xl"
@@ -120,7 +120,7 @@ function Hero() {
 
             <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4">
               <div className="flex items-center justify-center">
-                <img src="/logo.png" alt="KalaVrit" className="h-8 object-contain" />
+                <img src="/logo.png" alt="KalaVrit" className="h-12 object-contain" />
               </div>
             </div>
           </motion.div>

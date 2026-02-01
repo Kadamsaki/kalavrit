@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import { ArrowRight, Brush, Menu, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import { useState, useEffect } from "react";
 
 const links = [
   { href: "/gallery", label: "Gallery" },
@@ -33,18 +34,37 @@ function NavLink({ href, label }: { href: string; label: string }) {
 }
 
 export function SiteNav() {
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    handleScroll(); // Check initial scroll position
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
     <div className="sticky top-0 z-50">
-      <div className="studio-noise">
+      <div
+        className={`transition-all duration-500 ease-out ${isScrolled
+            ? "bg-[hsl(var(--background)/0.95)] backdrop-blur-xl shadow-sm"
+            : "bg-transparent backdrop-blur-sm"
+          }`}
+      >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-10">
           <div className="flex h-16 items-center justify-between">
             <Link href="/">
               <a className="group inline-flex items-center gap-2" data-testid="link-home">
-                <div className="leading-tight">
-                  <h1 className="font-serif text-3xl font-bold tracking-[-0.03em] text-[hsl(var(--primary))] transition-transform duration-300 group-hover:scale-[1.02]" data-testid="text-brand">
-                    KalaVrit
-                  </h1>
-                </div>
+                <img
+                  src="/logo.png"
+                  alt="KalaVrit"
+                  className="h-12 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  data-testid="text-brand"
+                />
               </a>
             </Link>
 
