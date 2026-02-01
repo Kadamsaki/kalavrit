@@ -1,7 +1,9 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, HeartHandshake, Instagram, MessageCircle, ShieldCheck } from "lucide-react";
+import { ArrowRight, HeartHandshake, Instagram, MessageCircle, ShieldCheck, Loader2 } from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,6 +17,50 @@ import { SiteFooter } from "@/components/site/footer";
 
 export default function ContactPage() {
   const [sent, setSent] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formData, setFormData] = useState({
+    name: "",
+    email: "",
+    message: ""
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
+  };
+
+  const handleSubmit = async () => {
+    if (!formData.name || !formData.email || !formData.message) {
+      toast.error("Please fill in all fields");
+      return;
+    }
+
+    setIsSubmitting(true);
+
+    try {
+      await emailjs.send(
+        "service_6u5x1wh",
+        "template_3f27ozk",
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        "7q81Tk3gFttZYKHNf"
+      );
+
+      setSent(true);
+      toast.success("Message sent successfully!");
+      setFormData({ name: "", email: "", message: "" });
+    } catch (error) {
+      console.error("EmailJS Error:", error);
+      toast.error("Failed to send message. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <PageTransition>
@@ -48,40 +94,48 @@ export default function ContactPage() {
                     Message the studio
                   </div>
                   <p className="mt-2 text-sm text-muted-foreground" data-testid="text-contact-form-subtitle">
-                    This form is simulated in the prototype.
+                    We typically reply within 24 hours.
                   </p>
 
                   <div className="mt-5 grid gap-3">
-                    <Input placeholder="Your name" className="h-11" data-testid="input-contact-name" />
-                    <Input placeholder="Email or phone" className="h-11" data-testid="input-contact-email" />
+                    <Input
+                      name="name"
+                      placeholder="Your name"
+                      className="h-11"
+                      value={formData.name}
+                      onChange={handleChange}
+                      data-testid="input-contact-name"
+                    />
+                    <Input
+                      name="email"
+                      placeholder="Email or phone"
+                      className="h-11"
+                      value={formData.email}
+                      onChange={handleChange}
+                      data-testid="input-contact-email"
+                    />
                     <Textarea
+                      name="message"
                       placeholder="Tell us what you’re thinking…"
                       className="min-h-[140px]"
+                      value={formData.message}
+                      onChange={handleChange}
                       data-testid="textarea-contact-message"
                     />
                     <Button
                       className="h-11"
-                      onClick={async () => {
-                        const name = (document.querySelector("[data-testid='input-contact-name']") as HTMLInputElement).value;
-                        const email = (document.querySelector("[data-testid='input-contact-email']") as HTMLInputElement).value;
-                        const message = (document.querySelector("[data-testid='textarea-contact-message']") as HTMLTextAreaElement).value;
-
-                        if (name && email && message) {
-                          try {
-                            await fetch("/api/contact", {
-                              method: "POST",
-                              headers: { "Content-Type": "application/json" },
-                              body: JSON.stringify({ name, email, message }),
-                            });
-                          } catch (e) {
-                            console.error("Failed to send message:", e);
-                          }
-                        }
-                        setSent(true);
-                      }}
+                      onClick={handleSubmit}
+                      disabled={isSubmitting}
                       data-testid="button-contact-send"
                     >
-                      Send message
+                      {isSubmitting ? (
+                        <>
+                          <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                          Sending...
+                        </>
+                      ) : (
+                        "Send message"
+                      )}
                     </Button>
                   </div>
 
