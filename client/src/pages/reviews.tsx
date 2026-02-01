@@ -1,4 +1,4 @@
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { Link } from "wouter";
 import { ArrowRight, CheckCircle2, Heart, ImagePlus, Sparkles, Star, Upload, X } from "lucide-react";
 import { useState, useRef } from "react";
@@ -32,6 +32,7 @@ export default function ReviewsPage() {
   const [submitted, setSubmitted] = useState(false);
   const [uploadedImage, setUploadedImage] = useState<string | null>(null);
   const [imageUploaded, setImageUploaded] = useState(false);
+  const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const [localReviews, setLocalReviews] = useState<LocalReview[]>(
@@ -307,12 +308,20 @@ export default function ReviewsPage() {
                     {r.image && (
                       <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4">
                         <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Shared Photo</div>
-                        <div className="rounded-xl overflow-hidden">
+                        <div
+                          className="relative rounded-xl overflow-hidden cursor-pointer group"
+                          onClick={() => setLightboxImage(r.image!)}
+                        >
                           <img
                             src={r.image}
                             alt="Customer reaction"
-                            className="w-full h-32 object-cover"
+                            className="w-full h-32 object-cover transition-transform duration-300 group-hover:scale-105"
                           />
+                          <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center">
+                            <span className="text-xs text-white opacity-0 group-hover:opacity-100 transition-opacity bg-black/50 px-2 py-1 rounded-lg">
+                              Click to view full size
+                            </span>
+                          </div>
                         </div>
                       </div>
                     )}
@@ -348,6 +357,44 @@ export default function ReviewsPage() {
         </div>
       </main>
       <SiteFooter />
+
+      {/* Image Lightbox Modal */}
+      <AnimatePresence>
+        {lightboxImage && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm p-4"
+            onClick={() => setLightboxImage(null)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.9 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative max-w-4xl max-h-[90vh] w-full"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setLightboxImage(null)}
+                className="absolute -top-12 right-0 flex items-center gap-2 text-white/80 hover:text-white transition-colors"
+              >
+                <X className="h-6 w-6" />
+                <span className="text-sm">Close</span>
+              </button>
+              <img
+                src={lightboxImage}
+                alt="Full size artwork"
+                className="w-full h-auto max-h-[85vh] object-contain rounded-2xl shadow-2xl"
+              />
+              <p className="text-center text-white/60 text-sm mt-4">
+                Click anywhere outside to close
+              </p>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 }
