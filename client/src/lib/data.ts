@@ -205,6 +205,6 @@ export const reviews: Review[] = [
     occasion: "Janmashtami Gift",
     createdAt: "2025-10-25",
     text: "Ordered this Radha Krishna artwork for Janmashtami and it arrived just in time. The divine love between Radha and Krishna is portrayed so beautifully — you can feel the devotion in every brushstroke. My grandmother was moved to tears when she saw it. It has brought such positive energy to our home temple.",
-    image: "/artwork_4.jpg",
+    image: "/reaction_radhakrishna.jpg",
   },
 ];
