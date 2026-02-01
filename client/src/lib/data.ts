@@ -24,6 +24,7 @@ export type Review = {
   text: string;
   occasion: string;
   createdAt: string;
+  image?: string; // Optional artwork image
 };
 
 export type CustomOrderDraft = {
@@ -168,40 +169,42 @@ export const artworks: Artwork[] = [
 export const reviews: Review[] = [
   {
     id: "r1",
-    name: "Neha",
+    name: "Neha Sharma",
     location: "Mumbai",
     rating: 5,
-    occasion: "Anniversary",
+    occasion: "Anniversary Gift",
     createdAt: "2025-11-03",
-    text:
-      "When we opened it, my husband actually went quiet. It looked like a memory, not a photo. The warmth in the brushwork made us feel… held.",
+    text: "When we opened it, my husband actually went quiet for a moment. The way they captured our expressions, the warmth in the brushwork — it felt like looking at a cherished memory, not just a photo. We both had tears in our eyes. This is now the centerpiece of our living room.",
+    image: "/featured_1.jpg",
   },
   {
     id: "r2",
-    name: "Rahul",
+    name: "Rahul Mehta",
     location: "Delhi",
     rating: 5,
-    occasion: "Birthday",
+    occasion: "Birthday Surprise",
     createdAt: "2025-11-01",
-    text:
-      "I was skeptical about vector art for a portrait, but the way they captured the light in my daughter’s eyes was magical. Best gift ever.",
+    text: "I was honestly skeptical about digital art for a portrait, but KalaVrit completely exceeded my expectations. The way they captured the light dancing in my daughter's eyes was absolutely magical. She cried when she saw it — best birthday gift I've ever given!",
+    image: "/featured_2.jpg",
   },
   {
     id: "r3",
-    name: "Ananya",
+    name: "Ananya Reddy",
     location: "Bangalore",
     rating: 5,
-    occasion: "Housewarming",
+    occasion: "Couple Portrait",
     createdAt: "2025-10-28",
-    text: "The Ghibli style really brought out the whimsy of our first home. Everyone who visits asks where we got it artized!",
+    text: "The Ghibli-style portrait of us brought out such whimsy and joy! Every visitor who comes to our home asks where we got it done. The attention to small details — the way my partner holds my hand, our matching smiles — it's like they understood our love story.",
+    image: "/featured_3.jpg",
   },
   {
     id: "r4",
-    name: "Vikram",
+    name: "Vikram Patel",
     location: "Pune",
     rating: 4,
-    occasion: "Memorial",
+    occasion: "Memorial Tribute",
     createdAt: "2025-10-25",
-    text: "Truly a touching tribute. The charcoal work has a depth that photos just can't reach. Thank you for this.",
+    text: "We commissioned a portrait of my late grandmother from an old photograph. The depth and emotion in the charcoal-style work has a quality that photographs just cannot match. My mother was speechless. Thank you for helping us preserve her memory so beautifully.",
+    image: "/artwork_4.jpg",
   },
 ];
