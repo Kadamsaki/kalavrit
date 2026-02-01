@@ -62,7 +62,7 @@ export function SiteNav() {
                 <img
                   src="/logo.png"
                   alt="KalaVrit"
-                  className="h-24 w-auto object-contain transition-transform duration-300 group-hover:scale-105"
+                  className="h-[6.5rem] w-auto object-contain transition-transform duration-300 group-hover:scale-105"
                   data-testid="text-brand"
                 />
               </a>
