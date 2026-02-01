@@ -25,6 +25,7 @@ export function ArtworkCard({ art }: { art: Artwork }) {
               src={art.image}
               alt={art.title}
               className="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.03]"
+              style={art.objectPosition ? { objectPosition: art.objectPosition } : undefined}
               data-testid={`img-artwork-${art.id}`}
             />
             <div className={`pointer-events-none absolute inset-0 bg-gradient-to-t ${accentBg(art.accent)}`} />
