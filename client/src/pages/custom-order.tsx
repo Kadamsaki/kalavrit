@@ -430,8 +430,35 @@ export default function CustomOrderPage() {
                     Request initialized
                   </h2>
                   <p className="mt-2 text-sm text-muted-foreground" data-testid="text-custom-success-subtitle">
-                    Your WhatsApp chat has been opened. Please send the message and attach your reference images there.
+                    Your WhatsApp chat has been opened. Please send the message.
                   </p>
+
+                  {/* Image Attachment Reminder */}
+                  {draft.references.length > 0 && (
+                    <div className="mt-6 rounded-3xl border-2 border-[hsl(var(--primary))] bg-[hsl(var(--primary)/0.08)] p-5 text-left">
+                      <div className="flex items-center gap-2 text-sm font-semibold text-[hsl(var(--primary))]">
+                        <ImagePlus className="h-5 w-5" />
+                        📎 Don't forget to attach your images!
+                      </div>
+                      <p className="mt-2 text-sm text-muted-foreground">
+                        WhatsApp cannot auto-attach images. Please manually attach your {draft.references.length} reference image(s) after sending the message:
+                      </p>
+                      <div className="mt-3 flex flex-wrap gap-2">
+                        {draft.references.map((file, i) => (
+                          <div
+                            key={i}
+                            className="flex items-center gap-2 rounded-xl border border-card-border bg-white/60 px-3 py-2 text-xs"
+                          >
+                            <ImagePlus className="h-4 w-4 text-primary" />
+                            <span className="max-w-[120px] truncate">{file.name}</span>
+                          </div>
+                        ))}
+                      </div>
+                      <div className="mt-4 rounded-xl bg-white/50 p-3 text-xs text-muted-foreground">
+                        <strong>How to attach:</strong> In WhatsApp, tap the 📎 icon → Select your images → Send
+                      </div>
+                    </div>
+                  )}
 
                   <div className="mt-6 grid gap-3 text-left">
                     {[
