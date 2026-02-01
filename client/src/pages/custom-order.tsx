@@ -1,7 +1,7 @@
 import { useMemo, useState } from "react";
 import { Link } from "wouter";
-import { motion } from "framer-motion";
-import { ArrowLeft, ArrowRight, CheckCircle2, ImagePlus, Sparkles } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft, ArrowRight, CheckCircle2, Heart, ImagePlus, Sparkles, X } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -40,6 +40,7 @@ function prettyFiles(files: File[]) {
 export default function CustomOrderPage() {
   const [step, setStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
+  const [showPopup, setShowPopup] = useState(false);
   const [draft, setDraft] = useState<CustomOrderDraft>({
     paintingType: "Ghibli",
     person: "Couple",
@@ -59,13 +60,17 @@ export default function CustomOrderPage() {
     setStep((s) => Math.max(0, s - 1));
   }
 
-  function submit() {
+  function handleSubmitClick() {
+    // Show popup first
+    setShowPopup(true);
+  }
+
+  function proceedToWhatsApp() {
+    setShowPopup(false);
+
     const phone = "919766425515";
 
     const hasFiles = draft.references.length > 0;
-    const fileNames = hasFiles
-      ? draft.references.map((f) => f.name).join(", ")
-      : "";
 
     const messageText = [
       "Hello KalaVrit! 🎨",
@@ -88,6 +93,7 @@ export default function CustomOrderPage() {
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageText)}`;
     window.open(url, "_blank");
+    setSubmitted(true);
   }
 
   return (
@@ -277,6 +283,23 @@ export default function CustomOrderPage() {
                         </div>
                       </div>
 
+                      <div className="mt-4 rounded-2xl border border-[hsl(var(--primary)/0.3)] bg-[hsl(var(--primary)/0.05)] p-4">
+                        <div className="flex items-start gap-3">
+                          <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-[hsl(var(--primary)/0.15)]">
+                            <Heart className="h-4 w-4 text-[hsl(var(--primary))]" />
+                          </div>
+                          <div>
+                            <div className="text-sm font-medium text-[hsl(var(--primary))]">
+                              A gentle note about your images 💜
+                            </div>
+                            <p className="mt-1 text-xs text-muted-foreground leading-relaxed">
+                              Your images are saved here for reference. When we redirect you to WhatsApp,
+                              please attach your reference images again there. We will remind you! 🌸
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+
                       <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4 text-sm text-muted-foreground">
                         Tip: If it’s a memory-based piece, add any small detail photos (a place, a letter, an object).
                       </div>
@@ -376,7 +399,7 @@ export default function CustomOrderPage() {
                       <Button
                         variant="secondary"
                         className="mt-5 h-11 w-full"
-                        onClick={submit}
+                        onClick={handleSubmitClick}
                         data-testid="button-custom-submit-review"
                       >
                         Submit request on WhatsApp
@@ -404,7 +427,7 @@ export default function CustomOrderPage() {
                       <ArrowRight className="ml-2 h-4 w-4" />
                     </Button>
                   ) : (
-                    <Button onClick={submit} className="h-11" data-testid="button-custom-submit">
+                    <Button onClick={handleSubmitClick} className="h-11" data-testid="button-custom-submit">
                       <Sparkles className="mr-2 h-4 w-4" />
                       Submit request
                     </Button>
@@ -493,6 +516,76 @@ export default function CustomOrderPage() {
         </div>
       </main>
       <SiteFooter />
+
+      {/* WhatsApp Redirect Popup */}
+      <AnimatePresence>
+        {showPopup && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4"
+            onClick={() => setShowPopup(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.9, y: 20 }}
+              transition={{ duration: 0.3, ease: "easeOut" }}
+              className="relative w-full max-w-md rounded-3xl border border-[hsl(var(--primary)/0.3)] bg-white p-6 shadow-2xl"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <button
+                onClick={() => setShowPopup(false)}
+                className="absolute right-4 top-4 rounded-full p-1 text-muted-foreground hover:bg-gray-100 hover:text-foreground transition-colors"
+              >
+                <X className="h-5 w-5" />
+              </button>
+
+              <div className="text-center">
+                <div className="mx-auto flex h-16 w-16 items-center justify-center rounded-full bg-gradient-to-br from-[hsl(var(--primary)/0.2)] to-[hsl(var(--accent)/0.2)]">
+                  <Sparkles className="h-8 w-8 text-[hsl(var(--primary))]" />
+                </div>
+
+                <h3 className="mt-4 font-serif text-2xl text-[hsl(var(--primary))]">
+                  Thank you for your order 💜
+                </h3>
+
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">
+                  Your creative journey with KalaVrit is about to begin!
+                  We are so excited to bring your vision to life. 🎨
+                </p>
+
+                {draft.references.length > 0 && (
+                  <div className="mt-4 rounded-2xl border border-[hsl(var(--primary)/0.2)] bg-[hsl(var(--primary)/0.05)] p-4 text-left">
+                    <div className="flex items-center gap-2 text-sm font-medium text-[hsl(var(--primary))]">
+                      <ImagePlus className="h-4 w-4" />
+                      One small step 🌸
+                    </div>
+                    <p className="mt-2 text-xs text-muted-foreground">
+                      Please attach your {draft.references.length} reference image(s) in WhatsApp after sending the message.
+                      This helps us create your artwork perfectly!
+                    </p>
+                  </div>
+                )}
+
+                <Button
+                  onClick={proceedToWhatsApp}
+                  className="mt-6 h-12 w-full bg-[hsl(var(--primary))] text-white hover:bg-[hsl(var(--primary)/0.9)] rounded-2xl"
+                >
+                  <Heart className="mr-2 h-4 w-4" />
+                  Continue to WhatsApp
+                  <ArrowRight className="ml-2 h-4 w-4" />
+                </Button>
+
+                <p className="mt-3 text-xs text-muted-foreground">
+                  Your details are ready to share ✨
+                </p>
+              </div>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </PageTransition>
   );
 }
