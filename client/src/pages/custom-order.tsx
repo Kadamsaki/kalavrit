@@ -25,9 +25,9 @@ import type { CustomOrderDraft } from "@/lib/data";
 const steps = ["Type", "References", "Story", "Review"] as const;
 
 const sizes = [
-  { id: "A1", label: "A1 (23.4 x 33.1 in)" },
-  { id: "A2", label: "A2 (16.5 x 23.4 in)" },
-  { id: "A3", label: "A3 (11.7 x 16.5 in)" },
+  { id: "A1", label: "A1 (59.4 × 84.1 cm)" },
+  { id: "A2", label: "A2 (42 × 59.4 cm)" },
+  { id: "A3", label: "A3 (29.7 × 42 cm)" },
   { id: "Custom", label: "Custom Size" },
 ];
 
@@ -63,8 +63,8 @@ export default function CustomOrderPage() {
     const phone = "919766425515";
 
     const hasFiles = draft.references.length > 0;
-    const fileIndicator = hasFiles
-      ? `${draft.references.length} file(s) selected (will be attached manually)`
+    const fileNames = hasFiles
+      ? draft.references.map((f) => f.name).join(", ")
       : "No files selected";
 
     const messageText = [
@@ -80,11 +80,21 @@ export default function CustomOrderPage() {
       draft.story ? draft.story : "(No description provided)",
       "",
       "📸 Reference Images:",
-      "I have my reference images ready! Please see attached.",
-      "(Note: I am attaching them manually to this chat now)",
+      hasFiles
+        ? `I have ${draft.references.length} reference image(s) ready: ${fileNames}`
+        : "I will share my reference images shortly.",
+      "",
+      "⚠️ IMPORTANT: I am attaching my reference images right after sending this message.",
       "",
       "I'm looking forward to your creative touch. Please let me know the next steps! Thank you!",
     ].join("\n");
+
+    // Alert user to attach images after sending the message
+    if (hasFiles) {
+      alert(
+        `📸 Reminder: After WhatsApp opens, please:\n\n1. Send this message first\n2. Then tap the attachment icon (📎)\n3. Select and send your ${draft.references.length} reference image(s)\n\nYour selected files:\n${fileNames}`
+      );
+    }
 
     const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageText)}`;
     window.open(url, "_blank");
