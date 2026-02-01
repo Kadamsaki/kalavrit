@@ -1,7 +1,7 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, Heart, ImagePlus, Sparkles, Star, Upload } from "lucide-react";
-import { useState } from "react";
+import { ArrowRight, CheckCircle2, Heart, ImagePlus, Sparkles, Star, Upload, X } from "lucide-react";
+import { useState, useRef } from "react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -15,15 +15,84 @@ import { SiteNav } from "@/components/site/nav";
 import { SiteFooter } from "@/components/site/footer";
 import { reviews } from "@/lib/data";
 
+// Extended review type to include optional image
+type LocalReview = {
+  id: string;
+  name: string;
+  location: string;
+  rating: number;
+  text: string;
+  occasion: string;
+  createdAt: string;
+  image?: string; // Base64 encoded image
+};
+
 export default function ReviewsPage() {
   const [rating, setRating] = useState(5);
   const [submitted, setSubmitted] = useState(false);
-  const [localReviews, setLocalReviews] = useState([...reviews].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()));
+  const [uploadedImage, setUploadedImage] = useState<string | null>(null);
+  const [imageUploaded, setImageUploaded] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
+  const [localReviews, setLocalReviews] = useState<LocalReview[]>(
+    [...reviews].sort((a, b) => new Date(b.createdAt).getTime() - new Date(a.createdAt).getTime()) as LocalReview[]
+  );
   const [currentPage, setCurrentPage] = useState(0);
 
   const REVIEWS_PER_PAGE = 4;
   const pageCount = Math.ceil(localReviews.length / REVIEWS_PER_PAGE);
   const paginatedReviews = localReviews.slice(currentPage * REVIEWS_PER_PAGE, (currentPage + 1) * REVIEWS_PER_PAGE);
+
+  // Handle image upload
+  const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setUploadedImage(reader.result as string);
+        setImageUploaded(true);
+        // Auto-hide success message after 3 seconds
+        setTimeout(() => setImageUploaded(false), 3000);
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+
+  // Remove uploaded image
+  const removeImage = () => {
+    setUploadedImage(null);
+    setImageUploaded(false);
+    if (fileInputRef.current) {
+      fileInputRef.current.value = "";
+    }
+  };
+
+  // Handle form submission
+  const handleSubmit = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const form = e.currentTarget.closest("form");
+    if (!form) return;
+
+    const nameInput = form.querySelector("#name") as HTMLInputElement;
+    const feedbackInput = form.querySelector("#feedback") as HTMLTextAreaElement;
+
+    if (nameInput.value && feedbackInput.value) {
+      const newReview: LocalReview = {
+        id: Math.random().toString(36).substr(2, 9),
+        name: nameInput.value,
+        location: "Verified Art Enthusiast",
+        rating: rating,
+        text: feedbackInput.value,
+        occasion: "Custom Order",
+        createdAt: new Date().toISOString().split("T")[0],
+        image: uploadedImage || undefined,
+      };
+      setLocalReviews([newReview, ...localReviews]);
+      setSubmitted(true);
+      setCurrentPage(0);
+      setUploadedImage(null);
+    }
+  };
 
   return (
     <PageTransition>
@@ -40,7 +109,7 @@ export default function ReviewsPage() {
               </p>
             </div>
             <Badge variant="secondary" className="border-card-border bg-white/45" data-testid="badge-reviews">
-              {reviews.length} stories
+              {localReviews.length} stories
             </Badge>
           </div>
 
@@ -54,7 +123,7 @@ export default function ReviewsPage() {
                   </div>
                 </div>
                 <p className="mt-2 text-sm text-muted-foreground" data-testid="text-reviews-side-subtitle">
-                  Most commissions begin with a single sentence: “I want them to feel loved.”
+                  Most commissions begin with a single sentence: "I want them to feel loved."
                 </p>
                 <Link href="/custom">
                   <Button asChild className="mt-5 h-11 w-full" data-testid="button-reviews-cta">
@@ -105,37 +174,59 @@ export default function ReviewsPage() {
 
                     <div className="space-y-1.5">
                       <Label htmlFor="media" className="text-xs uppercase tracking-wider text-muted-foreground">Photo or Video</Label>
-                      <div className="flex items-center gap-2">
-                        <Input id="media" type="file" className="hidden" />
-                        <Button type="button" variant="secondary" className="h-10 w-full" onClick={() => document.getElementById("media")?.click()}>
+                      <input
+                        ref={fileInputRef}
+                        id="media"
+                        type="file"
+                        accept="image/*"
+                        className="hidden"
+                        onChange={handleImageUpload}
+                      />
+
+                      {!uploadedImage ? (
+                        <Button
+                          type="button"
+                          variant="secondary"
+                          className="h-10 w-full"
+                          onClick={() => fileInputRef.current?.click()}
+                        >
                           <Upload className="mr-2 h-4 w-4" />
                           Upload Media
                         </Button>
-                      </div>
+                      ) : (
+                        <div className="space-y-2">
+                          {/* Image Preview */}
+                          <div className="relative rounded-xl overflow-hidden border border-card-border">
+                            <img
+                              src={uploadedImage}
+                              alt="Preview"
+                              className="w-full h-24 object-cover"
+                            />
+                            <button
+                              type="button"
+                              onClick={removeImage}
+                              className="absolute top-2 right-2 h-6 w-6 rounded-full bg-black/50 flex items-center justify-center text-white hover:bg-black/70 transition-colors"
+                            >
+                              <X className="h-4 w-4" />
+                            </button>
+                          </div>
+                        </div>
+                      )}
+
+                      {/* Success Message */}
+                      {imageUploaded && (
+                        <motion.div
+                          initial={{ opacity: 0, y: -5 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          className="flex items-center gap-2 text-sm text-[hsl(158_38%_28%)] bg-[hsl(158_38%_28%/0.1)] rounded-lg px-3 py-2"
+                        >
+                          <CheckCircle2 className="h-4 w-4" />
+                          Image uploaded successfully ✅
+                        </motion.div>
+                      )}
                     </div>
 
-                    <Button type="submit" className="h-11 w-full" onClick={(e) => {
-                      e.preventDefault();
-                      const form = e.currentTarget.closest("form");
-                      if (!form) return;
-                      const nameInput = form.querySelector("#name") as HTMLInputElement;
-                      const feedbackInput = form.querySelector("#feedback") as HTMLTextAreaElement;
-
-                      if (nameInput.value && feedbackInput.value) {
-                        const newReview = {
-                          id: Math.random().toString(36).substr(2, 9),
-                          name: nameInput.value,
-                          location: "Verified Art Enthusiast",
-                          rating: rating as any,
-                          text: feedbackInput.value,
-                          occasion: "Custom Order",
-                          createdAt: new Date().toISOString().split("T")[0],
-                        };
-                        setLocalReviews([newReview, ...localReviews]);
-                        setSubmitted(true);
-                        setCurrentPage(0);
-                      }
-                    }}>
+                    <Button type="submit" className="h-11 w-full" onClick={handleSubmit}>
                       Submit Reaction
                     </Button>
                   </form>
@@ -154,12 +245,29 @@ export default function ReviewsPage() {
                     <p className="text-sm text-muted-foreground leading-relaxed">
                       Your reaction has been submitted successfully. Thank you for sharing your emotions with us.
                     </p>
+                    <Button
+                      variant="secondary"
+                      className="mt-4 h-10"
+                      onClick={() => {
+                        setSubmitted(false);
+                        setRating(5);
+                      }}
+                    >
+                      Add Another Reaction
+                    </Button>
                   </motion.div>
                 )}
               </Card>
             </div>
 
             <div className="lg:col-span-8">
+              {/* Dynamic page info */}
+              <div className="mb-4 flex items-center justify-between">
+                <p className="text-sm text-muted-foreground">
+                  Showing {paginatedReviews.length} of {localReviews.length} reactions
+                </p>
+              </div>
+
               <motion.div
                 key={currentPage}
                 initial={{ opacity: 0, x: 20 }}
@@ -192,21 +300,22 @@ export default function ReviewsPage() {
                     </div>
 
                     <p className="mt-4 text-sm leading-relaxed text-muted-foreground" data-testid={`text-review-${r.id}`}>
-                      “{r.text}”
+                      "{r.text}"
                     </p>
 
-                    <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4">
-                      <div className="text-xs uppercase tracking-wider text-muted-foreground">Reaction</div>
-                      <div className="mt-2 grid grid-cols-2 gap-2">
-                        {/* This would dynamically show uploaded images if they were stored */}
-                        <div className="aspect-square bg-muted rounded-xl flex items-center justify-center text-[10px] text-muted-foreground text-center p-2">
-                          Customer Image Preview
-                        </div>
-                        <div className="aspect-square bg-muted rounded-xl flex items-center justify-center text-[10px] text-muted-foreground text-center p-2">
-                          Artwork Preview
+                    {/* Only show reaction section if there's an uploaded image */}
+                    {r.image && (
+                      <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4">
+                        <div className="text-xs uppercase tracking-wider text-muted-foreground mb-2">Shared Photo</div>
+                        <div className="rounded-xl overflow-hidden">
+                          <img
+                            src={r.image}
+                            alt="Customer reaction"
+                            className="w-full h-32 object-cover"
+                          />
                         </div>
                       </div>
-                    </div>
+                    )}
                   </Card>
                 ))}
               </motion.div>
@@ -239,6 +348,6 @@ export default function ReviewsPage() {
         </div>
       </main>
       <SiteFooter />
-    </PageTransition >
+    </PageTransition>
   );
 }
