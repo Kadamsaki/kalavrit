@@ -52,41 +52,41 @@
   --elevate-1: rgba(0, 0, 0, 0.03);
   --elevate-2: rgba(0, 0, 0, 0.06);
 
-  /* Emotional studio palette (H S% L%) */
-  --background: 42 50% 97%; /* warm ivory */
-  --foreground: 220 14% 12%; /* deep charcoal */
+  /* Purple studio palette (H S% L%) */
+  --background: 270 20% 98%; /* soft lavender white */
+  --foreground: 270 30% 10%; /* deep plum/charcoal */
 
-  --card: 40 40% 99%;
-  --card-foreground: 220 14% 12%;
-  --card-border: 28 18% 86%;
+  --card: 270 20% 99%;
+  --card-foreground: 270 30% 10%;
+  --card-border: 270 15% 90%;
 
-  --popover: 40 40% 99%;
-  --popover-foreground: 220 14% 12%;
+  --popover: 270 20% 99%;
+  --popover-foreground: 270 30% 10%;
 
-  --primary: 154 26% 32%; /* deep sage green */
-  --primary-foreground: 42 50% 97%; /* ivory */
+  --primary: 270 45% 45%; /* elegant violet */
+  --primary-foreground: 270 20% 98%;
 
-  --secondary: 42 28% 94%;
-  --secondary-foreground: 220 14% 12%;
+  --secondary: 270 25% 94%;
+  --secondary-foreground: 270 30% 10%;
 
-  --muted: 42 22% 94%;
-  --muted-foreground: 30 8% 44%; /* warm gray */
+  --muted: 270 20% 95%;
+  --muted-foreground: 270 10% 45%;
 
-  --accent: 154 22% 30%; /* sage (subtle) */
-  --accent-foreground: 220 14% 12%;
+  --accent: 280 40% 50%; /* brighter plum */
+  --accent-foreground: 270 20% 98%;
 
-  --destructive: 0 70% 52%;
-  --destructive-foreground: 42 50% 97%;
+  --destructive: 0 70% 50%;
+  --destructive-foreground: 270 20% 98%;
 
-  --border: 36 16% 84%;
-  --input: 36 16% 80%;
-  --ring: 154 26% 32%;
+  --border: 270 15% 88%;
+  --input: 270 15% 85%;
+  --ring: 270 45% 45%;
 
-  --chart-1: 154 26% 32%;
-  --chart-2: 154 22% 40%;
-  --chart-3: 206 20% 42%;
-  --chart-4: 30 8% 44%;
-  --chart-5: 220 10% 22%;
+  --chart-1: 270 45% 45%;
+  --chart-2: 280 40% 55%;
+  --chart-3: 260 35% 50%;
+  --chart-4: 270 15% 45%;
+  --chart-5: 270 25% 20%;
 
   --font-sans: "Poppins", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
   --font-serif: "Playfair Display", ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;

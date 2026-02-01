@@ -1,6 +1,7 @@
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import type { Artwork } from "@/lib/data";
 
 function accentBg(accent: Artwork["accent"]) {
@@ -59,13 +60,20 @@ export function ArtworkCard({ art }: { art: Artwork }) {
             </div>
 
             <div className="mt-4 flex items-center justify-between">
-              <div className="text-sm" data-testid={`text-artwork-price-${art.id}`}>
-                <span className="font-semibold">₹{art.price.toLocaleString("en-IN")}</span>
-                <span className="text-muted-foreground"> • {art.medium}</span>
-              </div>
-              <span className="text-sm text-muted-foreground" data-testid={`text-artwork-year-${art.id}`}>
-                {art.year}
-              </span>
+              <Button
+                className="h-9 w-full rounded-2xl bg-primary text-primary-foreground hover:bg-primary/90"
+                onClick={(e: React.MouseEvent) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  const phone = "919766425515";
+                  const message = `Hello KalaVrit 👋, I am interested in buying the artwork: "${art.title}". Please let me know the next steps.`;
+                  const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                  window.open(url, "_blank");
+                }}
+                data-testid={`button-buy-now-${art.id}`}
+              >
+                Buy Now
+              </Button>
             </div>
           </div>
         </motion.div>

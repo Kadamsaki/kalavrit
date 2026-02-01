@@ -22,13 +22,11 @@ import { SiteFooter } from "@/components/site/footer";
 import { ArtworkCard } from "@/components/site/artwork-card";
 import { artworks } from "@/lib/data";
 
-const types = ["All", "Family", "Couple", "Pet", "Friends", "Memory"] as const;
-const prices = ["All", "Under ₹7k", "₹7k–₹13k", "₹13k+"] as const;
+const types = ["All", "Ghibli", "Vector Art", "Sketch", "Portrait", "Realistic"] as const;
 
 export default function GalleryPage() {
   const [q, setQ] = useState("");
   const [type, setType] = useState<(typeof types)[number]>("All");
-  const [price, setPrice] = useState<(typeof prices)[number]>("All");
 
   const filtered = useMemo(() => {
     const query = q.trim().toLowerCase();
@@ -42,16 +40,9 @@ export default function GalleryPage() {
 
       const matchesType = type === "All" ? true : a.tags.includes(type);
 
-      const matchesPrice = (() => {
-        if (price === "All") return true;
-        if (price === "Under ₹7k") return a.price < 7000;
-        if (price === "₹7k–₹13k") return a.price >= 7000 && a.price <= 13000;
-        return a.price > 13000;
-      })();
-
-      return matchesQ && matchesType && matchesPrice;
+      return matchesQ && matchesType;
     });
-  }, [price, q, type]);
+  }, [q, type]);
 
   return (
     <PageTransition>
@@ -114,34 +105,12 @@ export default function GalleryPage() {
                   </DropdownMenuContent>
                 </DropdownMenu>
 
-                <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
-                    <Button variant="secondary" className="h-11 gap-2" data-testid="button-filter-price">
-                      <Filter className="h-4 w-4" />
-                      Price: {price}
-                    </Button>
-                  </DropdownMenuTrigger>
-                  <DropdownMenuContent align="end" className="w-56">
-                    <DropdownMenuLabel>Price range</DropdownMenuLabel>
-                    <DropdownMenuSeparator />
-                    {prices.map((p) => (
-                      <DropdownMenuItem
-                        key={p}
-                        onClick={() => setPrice(p)}
-                        data-testid={`menu-price-${p.toLowerCase().replace(/\s+/g, "-")}`}
-                      >
-                        {p}
-                      </DropdownMenuItem>
-                    ))}
-                  </DropdownMenuContent>
-                </DropdownMenu>
-
                 <Badge
                   variant="secondary"
                   className="border-card-border bg-white/45"
                   data-testid="badge-gallery-count"
                 >
-                  {filtered.length} pieces
+                  {filtered.length} artworks
                 </Badge>
               </div>
             </div>

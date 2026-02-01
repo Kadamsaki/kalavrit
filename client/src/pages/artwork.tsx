@@ -116,18 +116,9 @@ export default function ArtworkDetailPage() {
                   {art.subtitle}
                 </p>
 
-                <div className="mt-5 rounded-2xl border border-card-border bg-white/45 p-4" data-testid="card-artwork-price">
-                  <div className="flex items-center justify-between">
-                    <div className="text-sm text-muted-foreground">Price</div>
-                    <div className="inline-flex items-center gap-2">
-                      <BadgeIndianRupee className="h-4 w-4 text-primary" />
-                      <div className="text-lg font-semibold" data-testid="text-artwork-price">
-                        ₹{art.price.toLocaleString("en-IN")}
-                      </div>
-                    </div>
-                  </div>
-                  <div className="mt-2 text-xs text-muted-foreground" data-testid="text-artwork-note">
-                    One original. Carefully packed. Shipping calculated at checkout (mock).
+                <div className="mt-5 rounded-2xl border border-card-border bg-white/45 p-4" data-testid="card-artwork-note">
+                  <div className="text-xs text-muted-foreground" data-testid="text-artwork-note">
+                    One original. Carefully packed. WhatsApp to confirm availability and shipping.
                   </div>
                 </div>
 
@@ -141,12 +132,19 @@ export default function ArtworkDetailPage() {
                 </div>
 
                 <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-                  <Link href={canBuy ? "/payment" : "/custom"}>
-                    <Button className="h-11" data-testid="button-artwork-buy">
-                      <ShoppingBag className="mr-2 h-4 w-4" />
-                      {canBuy ? "Buy now" : "Commission something similar"}
-                    </Button>
-                  </Link>
+                  <Button
+                    className="h-11"
+                    onClick={() => {
+                      const phone = "919766425515";
+                      const message = `Hello KalaVrit 👋, I am interested in buying the artwork: "${art.title}". Please let me know the next steps.`;
+                      const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
+                      window.open(url, "_blank");
+                    }}
+                    data-testid="button-artwork-buy"
+                  >
+                    <ShoppingBag className="mr-2 h-4 w-4" />
+                    Buy now
+                  </Button>
                   <Link href="/custom">
                     <Button asChild variant="secondary" className="h-11" data-testid="button-artwork-custom">
                       <a data-testid="link-artwork-custom">

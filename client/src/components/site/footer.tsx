@@ -8,20 +8,16 @@ export function SiteFooter() {
         <div className="mx-auto max-w-7xl px-4 pb-10 pt-10 sm:px-6 lg:px-10">
           <div className="grid gap-6 lg:grid-cols-3">
             <div className="glass-card ring-soft rounded-3xl p-6">
-              <div className="font-serif text-xl" data-testid="text-footer-brand">
-                KalaVrit
+              <div className="h-20 overflow-hidden" data-testid="text-footer-brand">
+                <img src="/logo.png" alt="KalaVrit" className="h-full object-contain" />
               </div>
-              <p className="mt-2 text-sm text-muted-foreground" data-testid="text-footer-tagline">
-                Turning emotions into art
+              <p className="mt-2 text-sm text-muted-foreground font-medium italic" data-testid="text-footer-tagline">
+                Where emotions are transformed into timeless art.
               </p>
               <div className="mt-4 flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
                 <span className="inline-flex items-center gap-2 rounded-full border border-card-border bg-white/40 px-3 py-2">
-                  <ShieldCheck className="h-4 w-4 text-primary" />
-                  Secure checkout (mock)
-                </span>
-                <span className="inline-flex items-center gap-2 rounded-full border border-card-border bg-white/40 px-3 py-2">
-                  <MessageCircle className="h-4 w-4 text-primary" />
-                  WhatsApp ready (UI)
+                  <Heart className="h-4 w-4 text-primary" />
+                  Handcrafted Art
                 </span>
               </div>
             </div>
@@ -73,8 +69,8 @@ export function SiteFooter() {
             className="mt-8 flex flex-col gap-2 rounded-2xl border border-card-border bg-white/35 px-4 py-4 text-xs text-muted-foreground sm:flex-row sm:items-center sm:justify-between"
             data-testid="footer-bottom"
           >
-            <span data-testid="text-footer-copyright">© {new Date().getFullYear()} KalaVrit</span>
-            <span data-testid="text-footer-note">Prototype • No payments processed</span>
+            <span data-testid="text-footer-copyright">© {new Date().getFullYear()} KalaVrit • Turning emotions into art</span>
+            <span data-testid="text-footer-note">Digital Art Studio Portfolio</span>
           </div>
         </div>
       </div>

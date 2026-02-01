@@ -24,6 +24,13 @@ import type { CustomOrderDraft } from "@/lib/data";
 
 const steps = ["Type", "References", "Story", "Review"] as const;
 
+const sizes = [
+  { id: "A1", label: "A1 (23.4 x 33.1 in)" },
+  { id: "A2", label: "A2 (16.5 x 23.4 in)" },
+  { id: "A3", label: "A3 (11.7 x 16.5 in)" },
+  { id: "Custom", label: "Custom Size" },
+];
+
 function prettyFiles(files: File[]) {
   if (!files.length) return "No files";
   if (files.length === 1) return files[0].name;
@@ -36,7 +43,7 @@ export default function CustomOrderPage() {
   const [draft, setDraft] = useState<CustomOrderDraft>({
     paintingType: "Ghibli",
     person: "Couple",
-    size: "12x16",
+    size: "A1",
     frame: "Without Frame",
     story: "",
     references: [],
@@ -60,27 +67,27 @@ export default function CustomOrderPage() {
       ? `${draft.references.length} file(s) selected (will be attached manually)`
       : "No files selected";
 
-    const message = [
-      "Hello KalaVrit 👋",
-      "I would like to place a custom art request.",
+    const messageText = [
+      "Hello KalaVrit! 🎨",
+      "I'm excited to start a custom art journey with you. Here are the details for my request:",
       "",
-      `🎨 Art Style: ${draft.paintingType}`,
-      `👤 Person: ${draft.person}`,
-      `📏 Size: ${draft.size}`,
-      `🖼️ Frame: ${draft.frame}`,
+      `✨ Style: ${draft.paintingType}`,
+      `👤 Subject: ${draft.person}`,
+      `📏 Preferred Size: ${draft.size}`,
+      `🖼️ Frame Preference: ${draft.frame}`,
       "",
-      "📝 Description / Emotion:",
+      "💌 My Story / The Emotion I want to capture:",
       draft.story ? draft.story : "(No description provided)",
       "",
-      "📎 Reference Images:",
-      fileIndicator,
+      "📸 Reference Images:",
+      "I have my reference images ready! Please see attached.",
+      "(Note: I am attaching them manually to this chat now)",
       "",
-      "Please let me know the next steps.",
-      "Thank you!",
+      "I'm looking forward to your creative touch. Please let me know the next steps! Thank you!",
     ].join("\n");
 
-    const url = `https://wa.me/${phone}?text=${encodeURIComponent(message)}`;
-    window.location.href = url;
+    const url = `https://wa.me/${phone}?text=${encodeURIComponent(messageText)}`;
+    window.open(url, "_blank");
   }
 
   return (
@@ -100,10 +107,10 @@ export default function CustomOrderPage() {
           <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:items-end sm:justify-between">
             <div>
               <h1 className="font-serif text-3xl tracking-[-0.02em]" data-testid="text-custom-title">
-                Custom painting request
+                Artize your memory
               </h1>
               <p className="mt-2 text-sm text-muted-foreground" data-testid="text-custom-subtitle">
-                A calm, step-by-step experience. No backend—your submission is simulated.
+                A gentle, step-by-step experience to turn your emotions into a masterpiece.
               </p>
             </div>
             <Badge variant="secondary" className="border-card-border bg-white/45" data-testid="badge-custom-step">
@@ -198,9 +205,9 @@ export default function CustomOrderPage() {
                             <SelectValue placeholder="Select size" />
                           </SelectTrigger>
                           <SelectContent>
-                            {["A4", "A3", "12x16", "16x20"].map((t) => (
-                              <SelectItem key={t} value={t} data-testid={`option-size-${t.toLowerCase()}`}>
-                                {t}
+                            {sizes.map((s) => (
+                              <SelectItem key={s.id} value={s.id} data-testid={`option-size-${s.id.toLowerCase()}`}>
+                                {s.label}
                               </SelectItem>
                             ))}
                           </SelectContent>
@@ -420,38 +427,35 @@ export default function CustomOrderPage() {
                     <CheckCircle2 className="h-7 w-7 text-[hsl(158_38%_28%)]" />
                   </div>
                   <h2 className="mt-5 font-serif text-3xl" data-testid="text-custom-success-title">
-                    Request sent (mock)
+                    Request initialized
                   </h2>
                   <p className="mt-2 text-sm text-muted-foreground" data-testid="text-custom-success-subtitle">
-                    In a real app, you’d receive a confirmation message + next steps. Here we simulate trust-building.
+                    Your WhatsApp chat has been opened. Please send the message and attach your reference images there.
                   </p>
 
                   <div className="mt-6 grid gap-3 text-left">
-                    {["We’ll reply within 24 hours", "You’ll get a sketch preview", "Advance payment is optional"].map(
-                      (t, i) => (
-                        <div
-                          key={t}
-                          className="rounded-2xl border border-card-border bg-white/45 px-4 py-4"
-                          data-testid={`card-custom-success-${i}`}
-                        >
-                          {t}
-                        </div>
-                      ),
-                    )}
+                    {[
+                      "We usually reply within 2–4 hours",
+                      "You'll receive a base sketch for approval",
+                      "Secure delivery within 10–14 days",
+                    ].map((t, i) => (
+                      <div
+                        key={t}
+                        className="rounded-2xl border border-card-border bg-white/45 px-4 py-4"
+                        data-testid={`card-custom-success-${i}`}
+                      >
+                        {t}
+                      </div>
+                    ))}
                   </div>
 
                   <div className="mt-6 flex flex-col gap-2 sm:flex-row sm:justify-center">
-                    <Link href="/payment">
-                      <Button asChild className="h-11" data-testid="button-custom-pay">
-                        <a data-testid="link-custom-pay">
-                          Payment options (mock)
+                    <Link href="/gallery">
+                      <Button asChild className="h-11" data-testid="button-custom-browse">
+                        <a data-testid="link-custom-browse">
+                          Browse ready-made art
                           <ArrowRight className="ml-2 h-4 w-4" />
                         </a>
-                      </Button>
-                    </Link>
-                    <Link href="/gallery">
-                      <Button asChild variant="secondary" className="h-11" data-testid="button-custom-browse">
-                        <a data-testid="link-custom-browse">Browse ready-made art</a>
                       </Button>
                     </Link>
                   </div>

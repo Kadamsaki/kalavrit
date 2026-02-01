@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Link } from "wouter";
 import { motion } from "framer-motion";
 import { ArrowRight, Brush, HeartHandshake, Sparkles, Star, Timer } from "lucide-react";
@@ -29,16 +30,20 @@ function Hero() {
               className="border-card-border bg-white/45"
               data-testid="badge-hero"
             >
-Multiple styles • Personalized artworks • Custom portraits
+              Multiple styles • Personalized artworks • Custom portraits
             </Badge>
 
+            <div className="flex items-center" data-testid="text-hero-brand-logo">
+              <h2 className="font-serif text-3xl font-bold tracking-[-0.03em] text-[hsl(var(--primary))]">KalaVrit</h2>
+            </div>
             <h1
-              className="mt-5 font-serif text-4xl tracking-[-0.03em] sm:text-5xl"
+              className="mt-2 font-serif text-4xl tracking-[-0.03em] sm:text-5xl"
               data-testid="text-hero-title"
             >
-Turning emotions into art.
+              Turning emotions into art.
             </h1>
             <p className="mt-4 max-w-xl text-base leading-relaxed text-muted-foreground" data-testid="text-hero-subtitle">
+              We transform your most precious memories into timeless art pieces.
               Commission personalized art in multiple styles—Ghibli, vector art, sketches, charcoal, and realistic.
               Every piece begins with your story and ends as something you can keep.
             </p>
@@ -114,23 +119,8 @@ Turning emotions into art.
             </div>
 
             <div className="mt-4 rounded-2xl border border-card-border bg-white/40 p-4">
-              <div className="flex items-center justify-between">
-                <div>
-                  <div className="text-sm text-muted-foreground" data-testid="text-hero-artist-label">
-Studio
-                  </div>
-                  <div className="font-serif text-lg" data-testid="text-hero-artist">
-                    KalaVrit
-                  </div>
-                </div>
-                <div className="text-right">
-                  <div className="text-sm text-muted-foreground" data-testid="text-hero-city-label">
-                    Studio
-                  </div>
-                  <div className="font-medium" data-testid="text-hero-city">
-                    KalaVrit
-                  </div>
-                </div>
+              <div className="flex items-center justify-center">
+                <img src="/logo.png" alt="KalaVrit" className="h-8 object-contain" />
               </div>
             </div>
           </motion.div>
@@ -210,34 +200,42 @@ function Reactions() {
 
         <div className="lg:col-span-7">
           <div className="grid gap-4 md:grid-cols-2" data-testid="grid-reviews">
-            {reviews.slice(0, 2).map((r) => (
-              <Card key={r.id} className="glass-card hover-lift rounded-3xl p-6" data-testid={`card-review-${r.id}`}>
-                <div className="flex items-start justify-between gap-3">
-                  <div>
-                    <div className="font-medium" data-testid={`text-review-name-${r.id}`}>
-                      {r.name} • {r.location}
+            {reviews.slice(0, 2).map((r) => {
+              const [localRating, setLocalRating] = useState(r.rating);
+              return (
+                <Card key={r.id} className="glass-card hover-lift rounded-3xl p-6" data-testid={`card-review-${r.id}`}>
+                  <div className="flex items-start justify-between gap-3">
+                    <div>
+                      <div className="font-medium" data-testid={`text-review-name-${r.id}`}>
+                        {r.name} • {r.location}
+                      </div>
+                      <div className="text-xs text-muted-foreground" data-testid={`text-review-occasion-${r.id}`}>
+                        {r.occasion}
+                      </div>
                     </div>
-                    <div className="text-xs text-muted-foreground" data-testid={`text-review-occasion-${r.id}`}>
-                      {r.occasion}
+                    <div className="flex items-center gap-1" data-testid={`rating-${r.id}`}>
+                      {Array.from({ length: 5 }).map((_, i) => (
+                        <button
+                          key={i}
+                          onClick={() => setLocalRating(i + 1 as any)}
+                          className="transition-transform hover:scale-110"
+                        >
+                          <Star
+                            className={
+                              "h-4 w-4 " +
+                              (i < localRating ? "fill-[hsl(var(--accent))] text-[hsl(var(--accent))]" : "text-[hsl(var(--border))]")
+                            }
+                          />
+                        </button>
+                      ))}
                     </div>
                   </div>
-                  <div className="inline-flex items-center gap-1" data-testid={`rating-${r.id}`}>
-                    {Array.from({ length: 5 }).map((_, i) => (
-                      <Star
-                        key={i}
-                        className={
-                          "h-4 w-4 " +
-                          (i < r.rating ? "text-[hsl(var(--accent))]" : "text-[hsl(var(--border))]")
-                        }
-                      />
-                    ))}
-                  </div>
-                </div>
-                <p className="mt-4 text-sm leading-relaxed text-muted-foreground" data-testid={`text-review-${r.id}`}>
-                  “{r.text}”
-                </p>
-              </Card>
-            ))}
+                  <p className="mt-4 text-sm leading-relaxed text-muted-foreground" data-testid={`text-review-${r.id}`}>
+                    “{r.text}”
+                  </p>
+                </Card>
+              );
+            })}
           </div>
         </div>
       </div>

@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowRight, MessageCircle, Phone, ShieldCheck } from "lucide-react";
+import { ArrowRight, HeartHandshake, Instagram, MessageCircle, ShieldCheck } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
@@ -27,7 +27,7 @@ export default function ContactPage() {
                 Contact & Trust
               </h1>
               <p className="mt-2 text-sm text-muted-foreground" data-testid="text-contact-subtitle">
-                Ask anything—timeline, revisions, delivery. WhatsApp link is UI-only.
+                Ask anything—timeline, revisions, delivery.
               </p>
             </div>
             <Link href="/custom">
@@ -59,53 +59,85 @@ export default function ContactPage() {
                       className="min-h-[140px]"
                       data-testid="textarea-contact-message"
                     />
-                    <Button className="h-11" onClick={() => setSent(true)} data-testid="button-contact-send">
+                    <Button
+                      className="h-11"
+                      onClick={async () => {
+                        const name = (document.querySelector("[data-testid='input-contact-name']") as HTMLInputElement).value;
+                        const email = (document.querySelector("[data-testid='input-contact-email']") as HTMLInputElement).value;
+                        const message = (document.querySelector("[data-testid='textarea-contact-message']") as HTMLTextAreaElement).value;
+
+                        if (name && email && message) {
+                          try {
+                            await fetch("/api/contact", {
+                              method: "POST",
+                              headers: { "Content-Type": "application/json" },
+                              body: JSON.stringify({ name, email, message }),
+                            });
+                          } catch (e) {
+                            console.error("Failed to send message:", e);
+                          }
+                        }
+                        setSent(true);
+                      }}
+                      data-testid="button-contact-send"
+                    >
                       Send message
                     </Button>
                   </div>
 
                   <div className="mt-5 grid gap-3 sm:grid-cols-2">
                     <a
-                      href="#"
-                      className="rounded-3xl border border-card-border bg-white/45 px-4 py-4 text-sm hover:bg-white/60"
+                      href="https://wa.me/919766425515"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-3xl border border-card-border bg-white/45 px-4 py-4 text-sm hover:bg-white/60 transition-colors"
                       data-testid="link-whatsapp"
                     >
                       <div className="flex items-center gap-2">
                         <MessageCircle className="h-4 w-4 text-primary" />
-                        WhatsApp (UI)
+                        WhatsApp
                       </div>
                       <div className="mt-1 text-xs text-muted-foreground">Quick replies + updates</div>
                     </a>
                     <a
-                      href="#"
-                      className="rounded-3xl border border-card-border bg-white/45 px-4 py-4 text-sm hover:bg-white/60"
-                      data-testid="link-call"
+                      href="https://www.instagram.com/kalavrit.store"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="rounded-3xl border border-card-border bg-white/45 px-4 py-4 text-sm hover:bg-white/60 transition-colors"
+                      data-testid="link-instagram"
                     >
                       <div className="flex items-center gap-2">
-                        <Phone className="h-4 w-4 text-primary" />
-                        Call (UI)
+                        <Instagram className="h-4 w-4 text-primary" />
+                        Instagram
                       </div>
-                      <div className="mt-1 text-xs text-muted-foreground">Discuss timeline & budget</div>
+                      <div className="mt-1 text-xs text-muted-foreground">@kalavrit.store • DM for art</div>
                     </a>
                   </div>
                 </>
               ) : (
                 <motion.div
-                  initial={{ opacity: 0, y: 10, filter: "blur(10px)" }}
-                  animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
+                  initial={{ opacity: 0, scale: 0.95, filter: "blur(10px)" }}
+                  animate={{ opacity: 1, scale: 1, filter: "blur(0px)" }}
                   transition={{ duration: 0.6, ease: "easeOut" }}
-                  className="py-8 text-center"
+                  className="py-12 text-center"
                   data-testid="panel-contact-success"
                 >
-                  <div className="mx-auto inline-flex h-14 w-14 items-center justify-center rounded-3xl border border-card-border bg-white/55">
-                    <ShieldCheck className="h-7 w-7 text-[hsl(158_38%_28%)]" />
+                  <div className="mx-auto inline-flex h-20 w-20 items-center justify-center rounded-[32px] border border-card-border bg-white/55 shadow-sm mb-6">
+                    <ShieldCheck className="h-10 w-10 text-[hsl(158_38%_28%)]" />
                   </div>
-                  <div className="mt-4 font-serif text-2xl" data-testid="text-contact-success-title">
-                    Message sent (mock)
+                  <div className="font-serif text-3xl mb-3" data-testid="text-contact-success-title">
+                    Your message has found its way to us!
                   </div>
-                  <p className="mt-2 text-sm text-muted-foreground" data-testid="text-contact-success-subtitle">
-                    In production, you’d get an email/WhatsApp confirmation.
+                  <p className="mt-2 text-base text-muted-foreground leading-relaxed max-w-md mx-auto" data-testid="text-contact-success-subtitle">
+                    Thank you for sharing your thoughts with KalaVrit. We've received your message and will reach out to you with warmth and care very soon.
                   </p>
+                  <Button
+                    variant="secondary"
+                    className="mt-8 h-11 px-8 rounded-2xl"
+                    onClick={() => setSent(false)}
+                  >
+                    Send Another Message
+                  </Button>
                 </motion.div>
               )}
             </Card>

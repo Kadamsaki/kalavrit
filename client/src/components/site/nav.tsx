@@ -40,16 +40,10 @@ export function SiteNav() {
           <div className="flex h-16 items-center justify-between">
             <Link href="/">
               <a className="group inline-flex items-center gap-2" data-testid="link-home">
-                <span className="inline-flex h-10 w-10 items-center justify-center rounded-2xl border border-card-border bg-white/70 shadow-xs">
-                  <Brush className="h-5 w-5 text-primary" />
-                </span>
                 <div className="leading-tight">
-                  <div className="font-serif text-base tracking-[-0.02em]" data-testid="text-brand">
+                  <h1 className="font-serif text-3xl font-bold tracking-[-0.03em] text-[hsl(var(--primary))] transition-transform duration-300 group-hover:scale-[1.02]" data-testid="text-brand">
                     KalaVrit
-                  </div>
-                  <div className="text-xs text-muted-foreground" data-testid="text-brand-sub">
-                    Turning emotions into art
-                  </div>
+                  </h1>
                 </div>
               </a>
             </Link>
